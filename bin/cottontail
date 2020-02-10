@@ -54,7 +54,7 @@ def subproc(host, port, ssl, username, password, vhost_name):
     logger.verbose("Connecting to amqp{}://{}:{}/{}".format(
         "s" if ssl else "", host, port, vhost_name))
 
-    ssl_options = 
+    ssl_options = None
     if ssl:
         import ssl as s
         ssl_options = {}

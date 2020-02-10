@@ -54,17 +54,12 @@ def subproc(host, port, ssl, username, password, vhost_name):
     logger.verbose("Connecting to amqp{}://{}:{}/{}".format(
         "s" if ssl else "", host, port, vhost_name))
 
-    ssl_options = None
-    if ssl:
-        import ssl as s
-        ssl_options = {}
-        ssl_options["cert_reqs"] = s.CERT_NONE
 
     try:
         credentials = pika.PlainCredentials(username, password)
         parameters = pika.ConnectionParameters(
             host=host, port=port, virtual_host=vhost_name,
-            credentials=credentials, ssl=ssl, ssl_options=ssl_options)
+            credentials=credentials)
         connection = pika.BlockingConnection(parameters)
         channel = connection.channel()
 
@@ -302,7 +297,7 @@ if __name__ == "__main__":
         port=o.port,
         username=args.username,
         password=args.password,
-        ssl=(o.scheme == "https")
+        ssl=False
     )
 
     try:
